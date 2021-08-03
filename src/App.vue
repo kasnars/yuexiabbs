@@ -2,7 +2,7 @@
   <div class="container">
     <global-header :user="currentUsers"></global-header>
     <column-list :list="list"></column-list>
-    <form>
+  <vaildate-form @from-submit="onFormSubmit">
   <div class="mb-3">
     <label class="from-label">邮箱地址</label>
     <vaildate-input :rules="emailRules" v-model="emailval"
@@ -15,7 +15,10 @@
     type="password" placeholder="请输入密码"></vaildate-input>
     {{passwordval}}
   </div>
-</form>
+  <template #submit>
+    <span  class="btn btn-danger">Submit</span>
+  </template>
+</vaildate-form>
   </div>
 </template>
 
@@ -25,6 +28,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import vaildateInput, { RulesProp } from './components/VaildateInput.vue'
+import vaildateForm from './components/VaildateForm.vue'
 
 const currentUsers:UserProps = {
   isLogin: true,
@@ -62,7 +66,8 @@ export default defineComponent({
   components: {
     ColumnList,
     GlobalHeader,
-    vaildateInput
+    vaildateInput,
+    vaildateForm
   },
   setup () {
     const emailval = ref('')
@@ -79,6 +84,9 @@ export default defineComponent({
       error: false,
       message: ''
     })
+    const onFormSubmit = (result:boolean) => {
+      console.log('result', result)
+    }
     return {
       list: testData,
       currentUsers,
@@ -86,7 +94,8 @@ export default defineComponent({
       emailRules,
       emailval,
       passwordRules,
-      passwordval
+      passwordval,
+      onFormSubmit
     }
   }
 })
