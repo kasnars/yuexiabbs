@@ -2,11 +2,11 @@
   <div class="row">
     <div v-for="column in columnlist" :key="column.id" class="col-4 mb-4">
       <div class="card h-100 shadow-sm">
-        <img :src="column.avatar" :alt="column.title" class="card-img-top imgsize my-3">
+        <img :src="column.avatar_url" :alt="column.title" class="card-img-top imgsize my-3">
         <div class="card-body text-center">
-          <h5 class="card-title">{{column.title}}</h5>
-          <p class="card-text text-left">{{column.description}}</p>
-          <router-link :to="`/column/${column.id}`" class="btn btn-primary">进入专栏</router-link>
+          <h5 class="card-title">{{column.name}}</h5>
+          <p class="card-text text-left">{{column.introduction}}</p>
+          <router-link :to="`/column/${column._id}`" class="btn btn-primary">进入专栏</router-link>
         </div>
       </div>
     </div>
@@ -20,7 +20,8 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 export interface ColumnProps{
   id:number;
   title:string;
-  avatar?:string;
+  // eslint-disable-next-line camelcase
+  avatar_url?:string;
   description:string;
 }
 
@@ -35,8 +36,8 @@ export default defineComponent({
   setup (props) {
     const columnlist = computed(() => {
       return props.list.map(f => {
-        if (!f.avatar) {
-          f.avatar = 'https://img2.baidu.com/it/u=471165137,3149093985&fm=26&fmt=auto&gp=0.jpg'
+        if (!f.avatar_url) {
+          f.avatar_url = 'https://img2.baidu.com/it/u=471165137,3149093985&fm=26&fmt=auto&gp=0.jpg'
         }
         return f
       })

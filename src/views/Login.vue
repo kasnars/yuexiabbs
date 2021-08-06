@@ -13,7 +13,7 @@
     type="password" placeholder="请输入密码"></vaildate-input>
   </div>
   <template #submit>
-    <span  class="btn btn-danger">Submit</span>
+    <span  class="btn btn-danger">登录</span>
   </template>
 </vaildate-form>
   </div>

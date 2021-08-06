@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <loader :text="'拼命加载中'"></loader>
     <global-header :user="currentUsers"></global-header>
     <router-view></router-view>
     <footer class="text-center py-4 text-secondary bg-light mt-6">
@@ -20,11 +21,13 @@ import { defineComponent, reactive, ref, computed } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader from './components/GlobalHeader.vue'
 import { useStore } from 'vuex'
+import Loader from './components/Loader.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
-    GlobalHeader
+    GlobalHeader,
+    Loader
   },
   setup () {
     const store = useStore()

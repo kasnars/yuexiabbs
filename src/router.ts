@@ -40,7 +40,6 @@ router.beforeEach((to, from, next) => {
   } else if (to.meta.donotneedtoLogin && store.state.user.isLogin) {
     next('/')
   } else {
-    console.log('mext')
     next()
   }
 })

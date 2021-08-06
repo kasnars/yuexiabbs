@@ -2,10 +2,10 @@
   <div class="column-detail-page w-75 mx-auto">
     <div class="column-info row mb-4 border-bottom pb-4 align-items-center">
       <div class="col-3 text-center">
-        <img :src="column.avatar" :alt="column.title" class="rounded-circle" v-if="column.avatar">
+        <img :src="nowtopic.avatar_url" :alt="column.title" v-if="nowtopic.avatar_url">
       </div>
       <div class="col-9">
-        <h4>{{column.title}}</h4>
+        <h4>{{nowtopic.name}}</h4>
         <p class="text-muted">{{column.description}}</p>
       </div>
     </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 // import { testData, testPosts } from '../testData'
 import { useStore } from 'vuex'
@@ -28,12 +28,18 @@ export default defineComponent({
   setup () {
     const route = useRoute()
     const store = useStore<GlobalDataProps>()
-    const currentId = +route.params.id
-    const column = computed(() => store.getters.getColumnById(currentId))
-    const list = computed(() => store.getters.getPostById(currentId))
+    const currentId = route.params.id
+    const column = computed(() => store.state.columns)
+    const list = computed(() => store.state.topicsques)
+    const nowtopic = computed(() => store.state.nowtopic)
+    onMounted(() => {
+      store.dispatch('fetchTopicsQues', currentId)
+      store.dispatch('fetchNowTopic', currentId)
+    })
     return {
       column,
-      list
+      list,
+      nowtopic
     }
   }
 })
