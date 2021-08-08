@@ -3,6 +3,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Column from './views/ColumnDetail.vue'
 import CreatePage from './views/CreatePage.vue'
+import Regist from './views/Regist.vue'
 import store from './store'
 
 const routerHistory = createWebHistory()
@@ -30,6 +31,11 @@ const router = createRouter({
       name: 'createpage',
       component: CreatePage,
       meta: { requiredLogin: true }
+    },
+    {
+      path: '/regist',
+      name: 'regist',
+      component: Regist
     }
   ]
 })

@@ -6,13 +6,11 @@
     <label class="from-label">用户名</label>
     <vaildate-input :rules="nameRules" v-model="nameval"
     type="text" placeholder="请输入用户名"></vaildate-input>
-    {{nameval}}
   </div>
     <div class="mb-3">
     <label class="from-label">密码</label>
     <vaildate-input :rules="passwordRules" v-model="passwordval"
     type="password" placeholder="请输入密码"></vaildate-input>
-    {{passwordval}}
   </div>
   <template #submit>
     <span  class="btn btn-info w-100 p-3">登录</span>
@@ -43,10 +41,12 @@ export default defineComponent({
     const passwordval = ref('')
     const testval = ref('')
     const passwordRules: RulesProp = [
-      { type: 'password', message: '密码不得少于6位' }
+      { type: 'password', message: '密码不得少于6位' },
+      { type: 'required', message: '密码不得为空' }
     ]
     const nameRules: RulesProp = [
-      { type: 'name', message: '用户名不得少于4位' }
+      { type: 'name', message: '用户名不得少于4位' },
+      { type: 'required', message: '用户名不得为空' }
     ]
     const testRule: RulesProp = [
       {
