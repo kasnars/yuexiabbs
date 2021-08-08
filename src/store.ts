@@ -1,15 +1,28 @@
-import { createStore } from 'vuex'
+import { createStore, Commit } from 'vuex'
 import { testData, testPosts, ColumnProps, PostProps } from './testData'
 import axios from 'axios'
 
-interface UserProps {
+export interface UserProps {
   isLogin: boolean;
   name?: string;
-  id?: number;
-  columnId?: number
+  columnId?: number;
+  _id?: string;
+  password?: string;
+  gender?: string;
+  headline?: string;
+  locations?: Array<any>;
+  business?: string;
+  employments?: Array<any>;
+  educations?: Array<any>;
 }
 
+export interface GlobalErrorProps {
+  status: boolean;
+  message?: string
+}
 export interface GlobalDataProps {
+  error: GlobalErrorProps
+  token: string
   loading: boolean
   columns: ColumnProps[];
   posts: PostProps[];
@@ -19,8 +32,24 @@ export interface GlobalDataProps {
   nowtopic: any
 }
 
+const postAndCommit = async (url: string, mutationName: string, commit: Commit, payload: any) => {
+  const { data } = await axios.post(url, payload)
+  commit(mutationName, data)
+  return data
+}
+
+const getAndCommit = async (url: string, mutationName: string, commit: Commit) => {
+  const { data } = await axios.get(url)
+  commit(mutationName, data)
+}
+// const userlogin = () => {
+
+// }
+
 const store = createStore<GlobalDataProps>({
   state: {
+    error: { status: false },
+    token: localStorage.getItem('token') || '',
     loading: false,
     columns: testData,
     posts: testPosts,
@@ -30,10 +59,20 @@ const store = createStore<GlobalDataProps>({
     nowtopic: []
   },
   mutations: {
-    login (state) {
-      state.user = {
-        ...state.user, isLogin: true, name: 'lyx', columnId: 1
-      }
+    // login (state) {
+    //   state.user = {
+    //     ...state.user, isLogin: true, name: 'lyx', columnId: 1
+    //   }
+    // },
+    login (state, data) {
+      const token = data.token
+      state.token = token
+      localStorage.setItem('token', token)
+      localStorage.setItem('isLogin', 'true')
+      localStorage.setItem('name', data.name)
+      localStorage.setItem('_id', data._id)
+      state.user._id = data._id
+      axios.defaults.headers.common.Authorization = `Bearer ${token}`
     },
     createPost (state, newPost) {
       state.posts.push(newPost)
@@ -53,6 +92,15 @@ const store = createStore<GlobalDataProps>({
     },
     setLoading (state, status) {
       state.loading = status
+    },
+    fetchUser (state, data) {
+      console.log(data, 'statedata')
+      localStorage.setItem('isLogin', 'true')
+      state.user.isLogin = true
+      return data
+    },
+    setError (state, e:GlobalErrorProps) {
+      state.error = e
     }
   },
   actions: {
@@ -74,6 +122,18 @@ const store = createStore<GlobalDataProps>({
     fetchNowTopic (context, topicId) {
       axios.get(`/topics/${topicId}`).then(res => {
         context.commit('fetchNowTopic', res.data)
+      })
+    },
+    login ({ commit }, payload) {
+      return postAndCommit('/users/login', 'login', commit, payload)
+    },
+    fetchUser ({ commit }) {
+      const userId = this.state.user._id
+      getAndCommit(`/users/${userId}?fields=following;locations`, 'fetchUser', commit)
+    },
+    loginAndfetch ({ dispatch }, logindata) {
+      return dispatch('login', logindata).then(() => {
+        return dispatch('fetchUser')
       })
     }
   },
