@@ -5,6 +5,7 @@ import Column from './views/ColumnDetail.vue'
 import CreatePage from './views/CreatePage.vue'
 import Regist from './views/Regist.vue'
 import store from './store'
+import QuestionDetail from './views/QuestionsDetail.vue'
 
 const routerHistory = createWebHistory()
 const router = createRouter({
@@ -36,6 +37,11 @@ const router = createRouter({
       path: '/regist',
       name: 'regist',
       component: Regist
+    },
+    {
+      path: '/question/:id',
+      name: 'question',
+      component: QuestionDetail
     }
   ]
 })

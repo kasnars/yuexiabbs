@@ -2,6 +2,17 @@ import { createStore, Commit } from 'vuex'
 import { testData, testPosts, ColumnProps, PostProps } from './testData'
 import axios from 'axios'
 
+export interface ResponseType <P = Record<string, unknown>> {
+  code: number;
+  msg: string;
+  data: P
+}
+
+export interface ImageProps {
+  _id?: string;
+  url?: string;
+  createdAt?: string
+}
 export interface UserProps {
   isLogin: boolean;
   name?: string;
@@ -29,7 +40,8 @@ export interface GlobalDataProps {
   user: UserProps,
   questions: any,
   topicsques: any,
-  nowtopic: any
+  nowtopic: any,
+  tempUrl: string
 }
 
 const postAndCommit = async (url: string, mutationName: string, commit: Commit, payload: any) => {
@@ -56,7 +68,8 @@ const store = createStore<GlobalDataProps>({
     user: { isLogin: false },
     questions: [],
     topicsques: [],
-    nowtopic: []
+    nowtopic: [],
+    tempUrl: ''
   },
   mutations: {
     // login (state) {

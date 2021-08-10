@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <button type="button" class="list-group-item list-group-item-action"
+    <router-link :to="`/question/${ques._id}`" type="button" class="list-group-item list-group-item-action"
     v-for="ques in questions" :key="ques._id"
-    >{{ques.title}}</button>
+    >{{ques.title}}</router-link>
   </div>
 </template>
 
