@@ -41,7 +41,8 @@ export interface GlobalDataProps {
   questions: any,
   topicsques: any,
   nowtopic: any,
-  tempUrl: string
+  tempUrl: string,
+  nowanswers: Array<any>
 }
 
 const postAndCommit = async (url: string, mutationName: string, commit: Commit, payload: any) => {
@@ -69,7 +70,8 @@ const store = createStore<GlobalDataProps>({
     questions: [],
     topicsques: [],
     nowtopic: [],
-    tempUrl: ''
+    tempUrl: '',
+    nowanswers: []
   },
   mutations: {
     // login (state) {
@@ -114,6 +116,10 @@ const store = createStore<GlobalDataProps>({
     },
     setError (state, e:GlobalErrorProps) {
       state.error = e
+    },
+    getNowAnswers (state, data) {
+      state.nowanswers = data
+      console.log(data, 'commitdata')
     }
   },
   actions: {
@@ -147,6 +153,11 @@ const store = createStore<GlobalDataProps>({
     loginAndfetch ({ dispatch }, logindata) {
       return dispatch('login', logindata).then(() => {
         return dispatch('fetchUser')
+      })
+    },
+    getNowAnswers ({ commit }, nowquesId) {
+      axios.get(`/questions/${nowquesId}/answers`).then(res => {
+        commit('getNowAnswers', res.data)
       })
     }
   },

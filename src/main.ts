@@ -9,6 +9,10 @@ axios.defaults.baseURL = 'http://1.116.134.48:3001/'
 axios.interceptors.request.use(config => {
   store.commit('setLoading', true)
   store.commit('setError', { status: false, message: '' })
+  const token = localStorage.getItem('token')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
   return config
 })
 

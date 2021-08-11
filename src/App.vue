@@ -26,7 +26,6 @@ import { useStore } from 'vuex'
 import { GlobalDataProps } from './store'
 import Loader from './components/Loader.vue'
 import createMessage from './components/createMessage'
-import Message from './components/Message.vue'
 
 export default defineComponent({
   name: 'App',

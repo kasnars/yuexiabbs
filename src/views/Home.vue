@@ -1,15 +1,13 @@
 <template>
   <div class="container">
-    <upload :action="'/upload'" :beforeupload="beforeupload" @file-uploaded="onFileUploaded">
+    <!-- <upload :action="'/upload'" :beforeupload="beforeupload" @file-uploaded="onFileUploaded">
       <h2>点击上传</h2>
-      <!-- <template #uploaded="dataProps">
-        <img :src="dataProps.resData" width="500">
-        {{dataProps.resData}}
-      </template> -->
       <template #uploaded >
         <img :src="tempurl" alt="">
       </template>
-    </upload>
+    </upload> -->
+    <img src="https://img0.baidu.com/it/u=605166524,1097055388&fm=26&fmt=auto&gp=0.jpg"
+    class="img-fluid w-100 p-3" alt="...">
     <h4 class="text-center">热门提问</h4>
     <questions-list :questions="queslist"></questions-list>
     <h4 class="text-center">热门话题</h4>
@@ -22,7 +20,6 @@ import { defineComponent, computed, onMounted } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList from '../components/ColumnList.vue'
 import QuestionsList from '../components/QuestionsList.vue'
-import Upload from '../components/Upload.vue'
 import createMessage from '../components/createMessage'
 import { useStore } from 'vuex'
 import { GlobalDataProps, ResponseType, ImageProps } from '../store'
@@ -31,8 +28,7 @@ export default defineComponent({
   name: 'App',
   components: {
     ColumnList,
-    QuestionsList,
-    Upload
+    QuestionsList
   },
   setup () {
     const store = useStore<GlobalDataProps>()
