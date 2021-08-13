@@ -42,7 +42,8 @@ export interface GlobalDataProps {
   topicsques: any,
   nowtopic: any,
   tempUrl: string,
-  nowanswers: Array<any>
+  nowanswers: Array<any>,
+  comment: string
 }
 
 const postAndCommit = async (url: string, mutationName: string, commit: Commit, payload: any) => {
@@ -71,7 +72,8 @@ const store = createStore<GlobalDataProps>({
     topicsques: [],
     nowtopic: [],
     tempUrl: '',
-    nowanswers: []
+    nowanswers: [],
+    comment: ''
   },
   mutations: {
     // login (state) {
@@ -120,6 +122,9 @@ const store = createStore<GlobalDataProps>({
     getNowAnswers (state, data) {
       state.nowanswers = data
       console.log(data, 'commitdata')
+    },
+    inputComment (state, data) {
+      state.comment = data
     }
   },
   actions: {
