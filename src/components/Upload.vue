@@ -2,16 +2,24 @@
   <div class="file-upload">
     <div class="file-upload-container" @click.prevent="triggerUpload">
       <slot v-if="fileStatus === 'loading'" name="loading">
+        <div class="d-grid gap-2">
         <button class="btn btn-primary" disabled>正在上传...</button>
+        </div>
       </slot>
       <slot v-else-if="fileStatus === 'success'" name="uploaded" :uploadData="uploadData">
-        <button class="btn btn-primary" disabled>上传完成</button>
+        <div class="d-grid gap-2">
+        <button class="btn btn-primary" disabled>上传完成,点击可重新上传</button>
+        </div>
       </slot>
       <slot v-else-if="fileStatus === 'error'" name="error">
-        <button class="btn btn-primary">上传失败</button>
+        <div class="d-grid gap-2">
+        <button class="btn btn-primary">上传失败,点击可重新上传</button>
+        </div>
       </slot>
       <slot v-else name="default">
-        <button class="btn btn-primary">点击上传</button>
+        <div class="d-grid gap-2">
+        <button class="btn btn-primary w-auto">点击上传</button>
+        </div>
       </slot>
     </div>
     <input type="file" class="file-input d-none" ref="fileInput" @change="handleFileChange">

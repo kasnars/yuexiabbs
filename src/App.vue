@@ -1,14 +1,12 @@
 <template>
   <div class="container">
-    <h1>{{err}}</h1>
-    <!-- <message :message="err" type="error" v-if="err"></message> -->
     <loader :text="'拼命加载中'" v-if="isLoading"></loader>
     <global-header :user="currentUsers"></global-header>
     <router-view></router-view>
     <footer class="text-center py-4 text-secondary bg-light mt-6">
       <small>
         <ul class="list-inline mb-0">
-          <li class="list-inline-item">者也论坛</li>
+          <li class="list-inline-item">月下论坛</li>
           <li class="list-inline-item">关于</li>
           <li class="list-inline-item">联系我</li>
           <li class="list-inline-item">更多</li>

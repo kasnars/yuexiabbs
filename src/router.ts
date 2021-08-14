@@ -6,6 +6,7 @@ import CreatePage from './views/CreatePage.vue'
 import Regist from './views/Regist.vue'
 import store from './store'
 import QuestionDetail from './views/QuestionsDetail.vue'
+import Edituser from './views/Edituser.vue'
 
 const routerHistory = createWebHistory()
 const router = createRouter({
@@ -42,6 +43,11 @@ const router = createRouter({
       path: '/question/:id',
       name: 'question',
       component: QuestionDetail
+    },
+    {
+      path: '/edituser',
+      name: 'edituser',
+      component: Edituser
     }
   ]
 })
