@@ -23,7 +23,8 @@
 </div>
 <div class="card mb-2 shadow shadow-sm  bg-body rounded" v-for="(ans,index)  in nowanswers" :key="ans._id">
   <div class="card-header text-info">
-    当前为第{{index + 1}}楼
+    <span class="text-start">匿名用户</span>
+    <div class="text-end">#{{index + 1}}</div>
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0">

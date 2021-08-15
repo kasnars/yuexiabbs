@@ -1,16 +1,11 @@
 <template>
   <div class="container">
-    <!-- <upload :action="'/upload'" :beforeupload="beforeupload" @file-uploaded="onFileUploaded">
-      <h2>点击上传</h2>
-      <template #uploaded >
-        <img :src="tempurl" alt="">
-      </template>
-    </upload> -->
-    <img src="https://img0.baidu.com/it/u=605166524,1097055388&fm=26&fmt=auto&gp=0.jpg"
-    class="img-fluid w-100 p-3" alt="...">
+    <user-show :userId="userid" class="mb-3"></user-show>
+    <!-- <img src="https://img0.baidu.com/it/u=605166524,1097055388&fm=26&fmt=auto&gp=0.jpg"
+    class="img-fluid w-100 p-3" alt="..."> -->
     <h4 class="text-center">热门提问</h4>
-    <questions-list :questions="queslist"></questions-list>
-    <h4 class="text-center">热门话题</h4>
+    <questions-list :questions="queslist" class="mb-5"></questions-list>
+    <h4 class="text-center mt-3">热门话题</h4>
     <column-list :list="list"></column-list>
   </div>
 </template>
@@ -21,6 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import ColumnList from '../components/ColumnList.vue'
 import QuestionsList from '../components/QuestionsList.vue'
 import createMessage from '../components/createMessage'
+import UserShow from '../components/UserShow.vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps, ResponseType, ImageProps } from '../store'
 
@@ -28,12 +24,14 @@ export default defineComponent({
   name: 'App',
   components: {
     ColumnList,
-    QuestionsList
+    QuestionsList,
+    UserShow
   },
   setup () {
     const store = useStore<GlobalDataProps>()
     const list = computed(() => store.state.columns)
     const queslist = computed(() => store.state.questions)
+    const userid = localStorage.getItem('_id')
     onMounted(() => {
       store.dispatch('fetchColumns')
       store.dispatch('fetchQuestions')
@@ -52,7 +50,7 @@ export default defineComponent({
     }
     const tempurl = computed(() => store.state.tempUrl)
     return {
-      list, queslist, beforeupload, onFileUploaded, tempurl
+      list, queslist, beforeupload, onFileUploaded, tempurl, userid
     }
   }
 })
