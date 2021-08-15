@@ -24,7 +24,7 @@
 <div class="card mb-2 shadow shadow-sm  bg-body rounded" v-for="(ans,index)  in nowanswers" :key="ans._id">
   <div class="card-header text-info">
     <span class="text-start">匿名用户</span>
-    <div class="text-end">#{{index + 1}}</div>
+    <span class="float-end">#{{index + 1}}</span>
   </div>
   <div class="card-body">
     <blockquote class="blockquote mb-0">
@@ -33,7 +33,7 @@
     </blockquote>
   </div>
 </div>
-<div  class="btn btn-primary addButton" @click.prevent="changeCommentShow">
+<div  class="btn btn-primary addButton" @click.prevent="changeCommentShow" v-if="isLogin">
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
 </svg>
@@ -80,6 +80,7 @@ export default defineComponent({
     const store = useStore<GlobalDataProps>()
     const route = useRoute()
     const nowId = route.params.id
+    const isLogin = localStorage.getItem('isLogin')
     const queserId = ref('')
     const commentval = ref('')
     const modalShow = ref(false)
@@ -147,7 +148,8 @@ export default defineComponent({
       commentShow,
       commentval,
       getInput,
-      postComment
+      postComment,
+      isLogin
     }
   }
 })

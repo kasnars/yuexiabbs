@@ -1,8 +1,16 @@
 <template>
   <div class="container">
-    <user-show :userId="userid" class="mb-3"></user-show>
+    <user-show :userId="userid" class="mb-3" v-if="userid"></user-show>
     <!-- <img src="https://img0.baidu.com/it/u=605166524,1097055388&fm=26&fmt=auto&gp=0.jpg"
     class="img-fluid w-100 p-3" alt="..."> -->
+      <div class="card" v-else>
+        <img src="https://img1.baidu.com/it/u=2716035155,4250794299&fm=11&fmt=auto&gp=0.jpg" alt=""
+        class="imageSize"
+        >
+        <div class="card-body">
+          您还未登录，请先登录捏
+        </div>
+      </div>
     <h4 class="text-center">热门提问</h4>
     <questions-list :questions="queslist" class="mb-5"></questions-list>
     <h4 class="text-center mt-3">热门话题</h4>
@@ -57,4 +65,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.imageSize {
+  width: 300px;
+  height: 300px;
+}
 </style>
