@@ -16,6 +16,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { defTopicImage } from '../defaultConfig'
 
 export interface ColumnProps{
   id:number;
@@ -37,7 +38,8 @@ export default defineComponent({
     const columnlist = computed(() => {
       return props.list.map(f => {
         if (!f.avatar_url) {
-          f.avatar_url = 'https://img2.baidu.com/it/u=471165137,3149093985&fm=26&fmt=auto&gp=0.jpg'
+          // f.avatar_url = 'https://img2.baidu.com/it/u=471165137,3149093985&fm=26&fmt=auto&gp=0.jpg'
+          f.avatar_url = defTopicImage
         }
         return f
       })

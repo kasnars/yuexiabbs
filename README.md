@@ -1,5 +1,9 @@
-# zheye
+# 月下论坛
 
+## 所用技术栈  
+前端： Typescript, vue3  
+后端： Node.js，koa2，Mongodb  
+部署： 腾讯云， centos， PM2
 ## Project setup
 ```
 npm install

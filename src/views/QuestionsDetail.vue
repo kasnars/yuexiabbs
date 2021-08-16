@@ -6,8 +6,17 @@
   <div class="card-body">
     <h5 class="card-title fs-3">{{questionData.title}}</h5>
     <p class="card-text ">  {{questionData.description}}</p>
-    <p class="card-text"><small class="text-muted">当前问题发起者：  {{questionData.questioner.name}}</small></p>
+
+    <div class="card-text mt-3">
+      <span class="card-text fs-5">作者: </span>
+      <router-link :to="`/userindex/${queserId}`">
+      <img :src="questionData.questioner.userimage" alt="" class="useravatar">
+      </router-link>
+      <small class="text-muted">{{questionData.questioner.name}}</small>
+      <div class=" float-end textcenter">最后更新时间： {{questionData.updateTime}}</div>
+    </div>
   </div>
+  <div class="btn btn-outline-primary" @click.prevent="toReEdit" v-if="currentUser()">编辑文章</div>
 </div>
 <div class="shadow-sm p-3 mb-4 bg-body rounded mt-4 fs-5" v-if="nowanswers">当前评论:</div>
 <div class="shadow-sm p-3 mb-4 bg-body rounded mt-4 fs-5" v-if="!nowanswers[0]">
@@ -71,6 +80,8 @@ import createMessage from '../components/createMessage'
 import Comment from '../components/Comment.vue'
 import Modal from '../components/Modal.vue'
 import router from '@/router'
+import useTokenError from '../hooks/useTokenError'
+import { defUserImage } from '../defaultConfig'
 
 export default defineComponent({
   components: {
@@ -91,16 +102,20 @@ export default defineComponent({
       image: '',
       questioner: {
         name: '',
-        _id: ''
-      }
+        _id: '',
+        userimage: ''
+      },
+      updateTime: ''
     })
     axios.get(`/questions/${nowId}`).then(res => {
-      const { title, description, image, questioner } = res.data
+      const { title, description, image, questioner, updatedAt } = res.data
       questionData.title = title
       questionData.description = description
       questionData.image = image
       questionData.questioner.name = questioner.name
       questionData.questioner._id = questioner._id
+      questionData.questioner.userimage = questioner.avatar_url || defUserImage
+      questionData.updateTime = updatedAt ? updatedAt.split('T')[0] : '时间未知'
       queserId.value = questioner._id
     })
     onMounted(() => {
@@ -124,6 +139,9 @@ export default defineComponent({
     const currentUser = () => {
       return queserId.value === localStorage.getItem('_id')
     }
+    const toReEdit = () => {
+      router.push(`/reedit/${nowId}`)
+    }
     const getInput = computed(() => store.state.comment)
     const postComment = () => {
       axios.post(`/questions/${nowId}/answers`, {
@@ -134,6 +152,9 @@ export default defineComponent({
           // router.push(`/question/${nowId}`)
           router.go(0)
         }, 1500)
+      }).catch(() => {
+        useTokenError()
+        router.push('/login')
       })
     }
     return {
@@ -149,7 +170,9 @@ export default defineComponent({
       commentval,
       getInput,
       postComment,
-      isLogin
+      isLogin,
+      toReEdit,
+      queserId
     }
   }
 })
@@ -174,5 +197,14 @@ export default defineComponent({
   bottom: 150px;
   right: 40px;
   padding: 20px;
+}
+.useravatar{
+  width: 50px;
+  height: 50px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+}
+.textcenter {
+  line-height: 50px;
 }
 </style>

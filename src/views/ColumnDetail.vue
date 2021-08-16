@@ -1,16 +1,20 @@
 <template>
-  <div class="column-detail-page w-75 mx-auto">
-    <div class="column-info row mb-4 border-bottom pb-4 align-items-center">
-      <div class="col-3 text-center">
-        <img :src="nowtopic.avatar_url" :alt="column.title" v-if="nowtopic.avatar_url">
-      </div>
-      <div class="col-9">
-        <h4>{{nowtopic.name}}</h4>
-        <p class="text-muted">{{column.description}}</p>
+  <div class="card mb-3" style="max-width: 1400px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img :src="nowtopic.avatar_url ? nowtopic.avatar_url : defTopicImage"
+      class="img-fluid rounded-start" alt="column.title">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{nowtopic.name}}</h5>
+        <div class="card-text">{{column.description ? column.description : '当前话题还未添加描述'}}</div>
+        <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
       </div>
     </div>
-    <post-list :list="list"></post-list>
   </div>
+</div>
+<post-list :list="list"></post-list>
 </template>
 
 <script lang="ts">
@@ -20,6 +24,7 @@ import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
 import PostList from '../components/PostList.vue'
+import { defTopicImage } from '../defaultConfig'
 
 export default defineComponent({
   components: {
@@ -39,8 +44,16 @@ export default defineComponent({
     return {
       column,
       list,
-      nowtopic
+      nowtopic,
+      defTopicImage
     }
   }
 })
 </script>
+
+<style scoped>
+.maximage{
+  max-height: 500px;
+  max-width: 500px;
+}
+</style>

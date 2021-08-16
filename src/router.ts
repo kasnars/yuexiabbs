@@ -7,6 +7,8 @@ import Regist from './views/Regist.vue'
 import store from './store'
 import QuestionDetail from './views/QuestionsDetail.vue'
 import Edituser from './views/Edituser.vue'
+import Reedit from './views/Reedit.vue'
+import UserIndex from './views/UserIndex.vue'
 
 const routerHistory = createWebHistory()
 const router = createRouter({
@@ -48,6 +50,16 @@ const router = createRouter({
       path: '/edituser',
       name: 'edituser',
       component: Edituser
+    },
+    {
+      path: '/reedit/:id',
+      name: 'reedit',
+      component: Reedit
+    },
+    {
+      path: '/userindex/:id',
+      name: 'userindex',
+      component: UserIndex
     }
   ]
 })

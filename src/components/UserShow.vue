@@ -1,7 +1,9 @@
 <template>
 <div class="d-flex align-items-center container ">
   <div class="flex-shrink-0">
+    <router-link :to="`/userindex/${id}`">
     <img :src="avatarval" alt="..." class="img-fluid userImage">
+    </router-link>
   </div>
   <div class="flex-grow-1 ms-3">
     <p class="text-end fs-3">{{nameval}}</p>

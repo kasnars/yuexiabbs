@@ -1,17 +1,11 @@
 <template>
   <div v-for="post in list" :key="post.id">
-    <div class="card mb-3">
-      <div class="card-header">
-        {{ post.title }}
-      </div>
-      <div class="card-body">
-        <img :src="post.image" class="card-img-left " alt="..." v-if="post.image">
-        <blockquote class="blockquote mb-0">
-          <p>{{ post.content }}</p>
-          <footer class="blockquote-footer">{{ post.createdAt }}</footer>
-        </blockquote>
-      </div>
-    </div>
+<div class="card mb-3">
+  <router-link :to="`/question/${post._id}`"
+  class="card-body list-group-item-action text-decoration-none">
+    {{post.title}}
+  </router-link>
+</div>
   </div>
 </template>
 
