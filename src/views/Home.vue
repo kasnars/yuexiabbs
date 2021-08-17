@@ -11,10 +11,20 @@
           您还未登录，请先登录捏
         </div>
       </div>
-    <h4 class="text-center">热门提问</h4>
+    <h4 class="text-start mb-3">热门提问</h4>
     <questions-list :questions="queslist" class="mb-5"></questions-list>
-    <h4 class="text-center mt-3">热门话题</h4>
+    <div class="d-grid gap-2">
+      <button class="btn btn btn-outline-primary mb-3" type="button"
+      @click="toMoreQues"
+      >查看更多文章</button>
+    </div>
+    <h4 class="text-start mt-3 mb-3">热门话题</h4>
     <column-list :list="list"></column-list>
+    <div class="d-grid gap-2">
+      <button class="btn btn btn-outline-primary mb-3" type="button"
+      @click="toMoreTopics"
+      >查看更多话题</button>
+    </div>
   </div>
 </template>
 
@@ -27,6 +37,7 @@ import createMessage from '../components/createMessage'
 import UserShow from '../components/UserShow.vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps, ResponseType, ImageProps } from '../store'
+import router from '@/router'
 
 export default defineComponent({
   name: 'App',
@@ -57,8 +68,10 @@ export default defineComponent({
       createMessage(`上传图片成功，url为${rawData}`, 'success')
     }
     const tempurl = computed(() => store.state.tempUrl)
+    const toMoreTopics = () => router.push('/topicslist')
+    const toMoreQues = () => router.push('/questionslist')
     return {
-      list, queslist, beforeupload, onFileUploaded, tempurl, userid
+      list, queslist, beforeupload, onFileUploaded, tempurl, userid, toMoreTopics, toMoreQues
     }
   }
 })
