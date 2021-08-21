@@ -11,6 +11,7 @@ import Reedit from './views/Reedit.vue'
 import UserIndex from './views/UserIndex.vue'
 import TopicsByList from './views/TopicsByList.vue'
 import QuestionsByList from './views/QuestionsByList.vue'
+import CreateTopic from './views/CreateTopic.vue'
 
 const routerHistory = createWebHistory()
 const router = createRouter({
@@ -72,6 +73,11 @@ const router = createRouter({
       path: '/questionslist',
       name: 'questionslist',
       component: QuestionsByList
+    },
+    {
+      path: '/createtopic',
+      name: 'createtopic',
+      component: CreateTopic
     }
   ]
 })

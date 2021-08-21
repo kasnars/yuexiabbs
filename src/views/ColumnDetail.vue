@@ -8,7 +8,7 @@
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">{{nowtopic.name}}</h5>
-        <div class="card-text">{{column.description ? column.description : '当前话题还未添加描述'}}</div>
+        <div class="card-text">{{nowtopic.introduction ? nowtopic.introduction : '当前话题还未添加描述'}}</div>
         <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
       </div>
     </div>

@@ -5,7 +5,7 @@
     class="card-body list-group-item-action text-decoration-none">
       {{item.name || item.title}}
     </router-link> -->
-    <div @click="gorouter"
+    <div @click="gorouter(item)"
     class="card-body list-group-item-action text-decoration-none">
       {{item.name || item.title}}
     </div>
@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import router from '@/router'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -32,7 +33,14 @@ export default defineComponent({
   },
   setup (props) {
     const showtitle = ref(props.title)
-    const gorouter = (e: unknown) => console.log(e, 'e')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const gorouter = (item: any) => {
+      if (props.listType === 'questions') {
+        router.push(`/question/${item._id}`)
+      } else if (props.listType === 'topics') {
+        router.push(`/column/${item._id}`)
+      }
+    }
     return {
       showtitle,
       gorouter

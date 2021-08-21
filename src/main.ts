@@ -3,6 +3,7 @@ import App from './App.vue'
 import store from './store'
 import router from './router'
 import axios from 'axios'
+import useTokenError from './hooks/useTokenError'
 
 axios.defaults.baseURL = 'http://1.116.134.48:3001/'
 
@@ -21,6 +22,11 @@ axios.interceptors.response.use(config => {
   return config
 }, e => {
   console.log(e.response)
+  console.log(e.response.status)
+  if (e.response.status === 401) {
+    useTokenError()
+    router.push('/')
+  }
   const { message } = e.response.data
   store.commit('setError', { status: true, message })
   store.commit('setLoading', false)

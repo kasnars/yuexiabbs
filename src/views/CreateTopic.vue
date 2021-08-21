@@ -1,18 +1,18 @@
 <template>
-  <h4 style="margin-bottom: 30px">发布新文章</h4>
+  <h4 style="margin-bottom: 30px">创建新话题</h4>
   <upload :action="'/upload'"></upload>
   <vaildate-form @from-submit="onFormSubmit">
     <img :src = "nowimage" class="img-thumbnail imagetemp" alt="..." v-if="nowimage">
-    <h5>文章标题</h5>
+    <h5>话题标题</h5>
     <vaildate-input :rules="titleRule" v-model="titleval"></vaildate-input>
-    <h5>文章内容</h5>
+    <h5>话题概述</h5>
     <vaildate-input :rules="contentRule" v-model="contentval"
     tag="textarea"
     rows="10"
     ></vaildate-input>
     <template #submit>
       <div class="d-grid gap-2" >
-        <button class="btn btn-primary" type="button" >现在发布</button>
+        <button class="btn btn-primary" type="button" >立即创建</button>
       </div>
     </template>
   </vaildate-form>
@@ -42,24 +42,24 @@ export default defineComponent({
     const titleval = ref('')
     const contentval = ref('')
     const titleRule:RulesProp = [
-      { type: 'password', message: '标题长度不得小于6个字符' }
+      { type: 'required', message: '不得为空' }
     ]
     const contentRule:RulesProp = [
-      { type: 'password', message: '内容长度不得小于6个字符' }
+      { type: 'required', message: '不得为空' }
     ]
     const nowimage = computed(() => store.state.tempUrl)
     const onFormSubmit = (result: boolean) => {
       if (result) {
         const payload = {
-          title: titleval.value,
-          description: contentval.value,
-          image: nowimage.value || ''
+          name: titleval.value,
+          introduction: contentval.value,
+          avatar_url: nowimage.value
         }
-        axios.post('questions', payload).then(res => {
+        axios.post('/topics', payload).then(res => {
           const newquesurl = res.data._id
           createMessage('发布成功，即将跳转至文章', 'success')
           setTimeout(() => {
-            router.push(`/question/${newquesurl}`)
+            router.push(`/column/${newquesurl}`)
           }, 2000)
         })
       }

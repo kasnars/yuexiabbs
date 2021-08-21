@@ -97,7 +97,13 @@ const store = createStore<GlobalDataProps>({
     fetchColumns (state, data) {
       state.columns = data
     },
+    fetchColumnsByQ (state, data) {
+      state.columns = data
+    },
     fetchQuestions (state, data) {
+      state.questions = data
+    },
+    fetchQuestionsByQ (state, data) {
       state.questions = data
     },
     fetchTopicsQues (state, data) {
@@ -128,14 +134,45 @@ const store = createStore<GlobalDataProps>({
     }
   },
   actions: {
-    async fetchColumns ({ commit }) {
-      const res = await axios.get('/topics')
-      commit('fetchColumns', res.data)
+    async fetchColumns ({ commit }, page) {
+      if (page) {
+        const res = await axios.get(`/topics?page=${page}`)
+        commit('fetchColumns', res.data)
+      } else {
+        const res = await axios.get('/topics')
+        commit('fetchColumns', res.data)
+      }
     },
-    fetchQuestions (context) {
-      axios.get('/questions').then(res => {
-        context.commit('fetchQuestions', res.data)
-      })
+    async fetchColumnsByQ ({ commit }, q) {
+      if (q) {
+        const res = await axios.get(`/topics?q=${q}`)
+        commit('fetchColumnsByQ', res.data)
+      } else {
+        const res = await axios.get('/topics')
+        commit('fetchColumnsByQ', res.data)
+      }
+    },
+    fetchQuestions (context, page) {
+      if (page) {
+        axios.get(`/questions?page=${page}`).then(res => {
+          context.commit('fetchQuestions', res.data)
+        })
+      } else {
+        axios.get('/questions').then(res => {
+          context.commit('fetchQuestions', res.data)
+        })
+      }
+    },
+    fetchQuestionsByQ (context, q) {
+      if (q) {
+        axios.get(`/questions?q=${q}`).then(res => {
+          context.commit('fetchQuestionsByQ', res.data)
+        })
+      } else {
+        axios.get('/questions').then(res => {
+          context.commit('fetchQuestionsByQ', res.data)
+        })
+      }
     },
     fetchTopicsQues (context, topicId) {
       axios.get(`/topics/${topicId}/questions`).then(res => {

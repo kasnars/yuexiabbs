@@ -28,7 +28,7 @@ import { emitter } from './VaildateForm.vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 
 interface RuleProp {
-  type: 'required' | 'email' | 'password' | 'name' | 'custom';
+  type: 'required' | 'email' | 'password' | 'name' | 'custom' | 'title';
   message: string;
   myFunc?: () => boolean;
 }
@@ -67,6 +67,9 @@ export default defineComponent({
               break
             case 'name':
               passed = (inputRef.val.length >= 4)
+              break
+            case 'title':
+              passed = (inputRef.val.length >= 2)
               break
             case 'custom':
               console.log(rule.myFunc)

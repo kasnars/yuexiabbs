@@ -1,11 +1,11 @@
 <template>
   <div class="row">
-    <div v-for="column in columnlist" :key="column.id" class="col-4 mb-4">
-      <div class="card h-100 shadow-sm">
+    <div v-for="(column, index) in columnlist" :key="column.id" class="col-4 " :class="{'mb-4': index < 6}">
+      <div class="card h-100 shadow-sm" v-if="index < 6">
         <img :src="column.avatar_url" :alt="column.title" class="card-img-top imgsize my-3">
         <div class="card-body text-center">
           <h5 class="card-title">{{column.name}}</h5>
-          <p class="card-text text-left">{{column.introduction}}</p>
+          <p class="card-text text-left">{{column.introduction || ''}}</p>
           <router-link :to="`/column/${column._id}`" class="btn btn-primary">进入专栏</router-link>
         </div>
       </div>
