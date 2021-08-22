@@ -10,14 +10,18 @@
   <card-list  :title="'全部文章列表'" :listData="queslist" :listType="'questions'"></card-list>
   <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item">
+    <li class="page-item"
+    :class="{'disabled': page === 1}"
+    >
       <a class="page-link" href="#" aria-label="Previous" @click="changepage(-1)">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     <li class="page-item"><a class="page-link" href="#">{{page}}</a></li>
-    <li class="page-item ">
-      <a class="page-link" href="#" aria-label="Next" @click="changepage(1)">
+    <li class="page-item "
+    :class="{'disabled': queslist.length !== 10, 'dont': queslist.length !== 10}">
+      <a class="page-link" href="#" aria-label="Next" @click="changepage(1)"
+      >
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
@@ -26,16 +30,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted, ref } from 'vue'
+import { defineComponent, computed, onMounted, ref, reactive } from 'vue'
 import CardList from '../components/CardList.vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
+import axios from 'axios'
 
 export default defineComponent({
   components: {
     CardList
   },
   setup () {
+    const resdatalength = ref(0)
     const page = ref(1)
     const searchval = ref('')
     const store = useStore<GlobalDataProps>()
@@ -43,6 +49,10 @@ export default defineComponent({
     console.log(queslist.value, 'q')
     onMounted(() => {
       store.dispatch('fetchQuestions')
+      axios.get('/questions').then(res => {
+        resdatalength.value = res.data.length
+        console.log(resdatalength.value, 'length')
+      })
     })
     const changepage = (num: number) => {
       page.value += num
@@ -56,8 +66,15 @@ export default defineComponent({
       changepage,
       page,
       searchval,
-      toSearch
+      toSearch,
+      resdatalength
     }
   }
 })
 </script>
+
+<style scoped>
+.dont {
+  cursor:not-allowed;
+}
+</style>

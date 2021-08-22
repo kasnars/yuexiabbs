@@ -12,13 +12,17 @@
   <add-button :showing="userLoginState()" @click="toCreate"></add-button>
   <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item">
+    <li class="page-item"
+    :class="{'disabled': page === 1, 'dont': list.length !== 10}"
+    >
       <a class="page-link" href="#" aria-label="Previous" @click="changepage(-1)">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
     <li class="page-item"><a class="page-link" href="#">{{page}}</a></li>
-    <li class="page-item">
+    <li class="page-item"
+    :class="{'disabled': list.length !== 10, 'dont': list.length !== 10}"
+    >
       <a class="page-link" href="#" aria-label="Next" @click="changepage(1)">
         <span aria-hidden="true">&raquo;</span>
       </a>
@@ -74,3 +78,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.dont {
+  cursor: not-allowed;
+}
+</style>

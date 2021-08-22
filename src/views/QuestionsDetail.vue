@@ -31,8 +31,11 @@
 </div>
 </div>
 <div class="card mb-2 shadow shadow-sm  bg-body rounded" v-for="(ans,index)  in nowanswers" :key="ans._id">
+  {{ans.answererInfo || '1'}}
   <div class="card-header text-info">
-    <span class="text-start">匿名用户</span>
+    <span class="text-start" v-for="(anss, index) of ans.answererInfo" :key="index">
+      {{anss}}
+      </span>
     <span class="float-end">#{{index + 1}}</span>
   </div>
   <div class="card-body">
@@ -105,7 +108,8 @@ export default defineComponent({
         _id: '',
         userimage: ''
       },
-      updateTime: ''
+      updateTime: '',
+      answerId: ''
     })
     axios.get(`/questions/${nowId}`).then(res => {
       const { title, description, image, questioner, updatedAt } = res.data
@@ -122,6 +126,9 @@ export default defineComponent({
       store.dispatch('getNowAnswers', nowId)
     })
     const nowanswers = computed(() => store.state.nowanswers)
+    console.log(nowanswers.value.forEach(obj => {
+      console.log(obj)
+    }), 'now')
     const deleteQuestion = () => {
       axios.delete(`/questions/${nowId}`).then(() => {
         createMessage('删除成功，即将返回首页', 'success')

@@ -42,7 +42,8 @@ const router = createRouter({
     {
       path: '/regist',
       name: 'regist',
-      component: Regist
+      component: Regist,
+      meta: { donotneedtoLogin: true }
     },
     {
       path: '/question/:id',
@@ -52,12 +53,14 @@ const router = createRouter({
     {
       path: '/edituser',
       name: 'edituser',
-      component: Edituser
+      component: Edituser,
+      meta: { requiredLogin: true }
     },
     {
       path: '/reedit/:id',
       name: 'reedit',
-      component: Reedit
+      component: Reedit,
+      meta: { requiredLogin: true }
     },
     {
       path: '/userindex/:id',
@@ -77,7 +80,8 @@ const router = createRouter({
     {
       path: '/createtopic',
       name: 'createtopic',
-      component: CreateTopic
+      component: CreateTopic,
+      meta: { requiredLogin: true }
     }
   ]
 })
