@@ -31,11 +31,11 @@
 </div>
 </div>
 <div class="card mb-2 shadow shadow-sm  bg-body rounded" v-for="(ans,index)  in nowanswers" :key="ans._id">
-  {{ans.answererInfo || '1'}}
   <div class="card-header text-info">
-    <span class="text-start" v-for="(anss, index) of ans.answererInfo" :key="index">
-      {{anss}}
-      </span>
+    <span class="text-start" v-for="(val, key, index) of ans.answererInfo" :key="key">
+      <span v-if="index < 1" @click="toUserIndex(ans.answererInfo['_id'])">{{ans.answererInfo['name']}}</span>
+    </span>
+    <span v-if="!ans.answererInfo" >{{'匿名用户'}}</span>
     <span class="float-end">#{{index + 1}}</span>
   </div>
   <div class="card-body">
@@ -126,9 +126,6 @@ export default defineComponent({
       store.dispatch('getNowAnswers', nowId)
     })
     const nowanswers = computed(() => store.state.nowanswers)
-    console.log(nowanswers.value.forEach(obj => {
-      console.log(obj)
-    }), 'now')
     const deleteQuestion = () => {
       axios.delete(`/questions/${nowId}`).then(() => {
         createMessage('删除成功，即将返回首页', 'success')
@@ -149,6 +146,9 @@ export default defineComponent({
     const toReEdit = () => {
       router.push(`/reedit/${nowId}`)
     }
+    const toUserIndex = (id: number) => {
+      router.push(`/userindex/${id}`)
+    }
     const getInput = computed(() => store.state.comment)
     const postComment = () => {
       axios.post(`/questions/${nowId}/answers`, {
@@ -156,7 +156,6 @@ export default defineComponent({
       }).then(() => {
         createMessage('评论成功，即将跳转至问题详情', 'success')
         setTimeout(() => {
-          // router.push(`/question/${nowId}`)
           router.go(0)
         }, 1500)
       }).catch(() => {
@@ -179,7 +178,8 @@ export default defineComponent({
       postComment,
       isLogin,
       toReEdit,
-      queserId
+      queserId,
+      toUserIndex
     }
   }
 })
