@@ -1,18 +1,10 @@
 <template>
   <div class="container">
     <loader :text="'拼命加载中'" v-if="isLoading"></loader>
+    <toast-left ></toast-left>
     <global-header :user="currentUsers"></global-header>
     <router-view></router-view>
-    <footer class="text-center py-4 text-secondary bg-light mt-6">
-      <small>
-        <ul class="list-inline mb-0">
-          <li class="list-inline-item">月下论坛</li>
-          <li class="list-inline-item">关于</li>
-          <li class="list-inline-item">联系我</li>
-          <li class="list-inline-item">更多</li>
-        </ul>
-      </small>
-    </footer>
+    <global-foot></global-foot>
   </div>
 </template>
 
@@ -24,13 +16,16 @@ import { useStore } from 'vuex'
 import { GlobalDataProps } from './store'
 import Loader from './components/Loader.vue'
 import createMessage from './components/createMessage'
+import GlobalFoot from './components/GlobalFoot.vue'
+import ToastLeft from './components/ToastLeft.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     GlobalHeader,
-    Loader
-    // Message
+    Loader,
+    GlobalFoot,
+    ToastLeft
   },
   setup () {
     const store = useStore<GlobalDataProps>()
