@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <loader :text="'拼命加载中'" v-if="isLoading"></loader>
-    <toast-left ></toast-left>
     <global-header :user="currentUsers"></global-header>
     <router-view></router-view>
     <global-foot></global-foot>
@@ -17,15 +16,13 @@ import { GlobalDataProps } from './store'
 import Loader from './components/Loader.vue'
 import createMessage from './components/createMessage'
 import GlobalFoot from './components/GlobalFoot.vue'
-import ToastLeft from './components/ToastLeft.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     GlobalHeader,
     Loader,
-    GlobalFoot,
-    ToastLeft
+    GlobalFoot
   },
   setup () {
     const store = useStore<GlobalDataProps>()

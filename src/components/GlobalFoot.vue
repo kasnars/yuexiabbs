@@ -1,22 +1,46 @@
 <template>
       <footer class="text-center py-4 text-secondary bg-light mt-6">
       <small>
-        <ul class="list-inline mb-0">
-          <li class="list-inline-item">月下论坛</li>
-          <li class="list-inline-item">关于</li>
-          <li class="list-inline-item">联系我</li>
-          <li class="list-inline-item">更多</li>
-        </ul>
+        <div class="list-inline mb-0 mouse">
+          <div class="list-inline-item" @click="toHome">月下论坛</div>
+          <li class="list-inline-item" @click="toAbout">关于</li>
+          <li class="list-inline-item" @click="toCallMe">联系我</li>
+          <li class="list-inline-item" @click="toGitee">更多</li>
+        </div>
       </small>
     </footer>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import ToastLeft from '../components/ToastLeft.vue'
+import { useRouter } from 'vue-router'
+import createMessage from '../components/createMessage'
 
 export default defineComponent({
-  components: {
+  setup () {
+    const router = useRouter()
+    const toHome = () => router.push('/')
+    const toAbout = () => router.push('/about')
+    const toGitee = () => {
+      // open方法第二个参数传入'_blank'可以在新窗口打开
+      window.open('https://gitee.com/kasnars', '_blank')
+      // window.location.href = 'https://gitee.com/kasnars'
+    }
+    const toCallMe = () => {
+      createMessage('邮箱：kasnars@163.com', 'success', 5000)
+    }
+    return {
+      toHome,
+      toAbout,
+      toGitee,
+      toCallMe
+    }
   }
 })
 </script>
+
+<style scoped>
+.mouse{
+  cursor: pointer;
+}
+</style>

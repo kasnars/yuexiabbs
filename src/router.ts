@@ -12,6 +12,7 @@ import UserIndex from './views/UserIndex.vue'
 import TopicsByList from './views/TopicsByList.vue'
 import QuestionsByList from './views/QuestionsByList.vue'
 import CreateTopic from './views/CreateTopic.vue'
+import About from './views/About.vue'
 
 const routerHistory = createWebHistory()
 const router = createRouter({
@@ -82,6 +83,11 @@ const router = createRouter({
       name: 'createtopic',
       component: CreateTopic,
       meta: { requiredLogin: true }
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
     }
   ]
 })
