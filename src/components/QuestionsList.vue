@@ -4,7 +4,7 @@
     v-for="ques in questions" :key="ques._id"
     >{{ques.title}}</router-link>
   </div> -->
-<div class="mb-2" v-for="(ques, index) in questions" :key="ques._id"
+<div class="mb-2 shadow-sm" v-for="(ques, index) in questions" :key="ques._id"
   :class="{'card': index < 5}">
   <template v-if="index < 5">
   <router-link :to="`/question/${ques._id}`" class="card-body  list-group-item-action text-decoration-none">

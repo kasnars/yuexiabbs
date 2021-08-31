@@ -7,7 +7,7 @@
     <h5 class="card-title fs-3">{{questionData.title}}</h5>
     <p class="card-text ">  {{questionData.description}}</p>
 
-    <div class="card-text mt-3">
+    <div class="card-text mt-3 ">
       <span class="card-text fs-5">作者: </span>
       <router-link :to="`/userindex/${queserId}`">
       <img :src="questionData.questioner.userimage" alt="" class="useravatar">
@@ -18,7 +18,10 @@
   </div>
   <div class="btn btn-outline-primary" @click.prevent="toReEdit" v-if="currentUser()">编辑文章</div>
 </div>
-<div class="shadow-sm p-3 mb-4 bg-body rounded mt-4 fs-5" v-if="nowanswers">当前评论:</div>
+<div class="shadow-sm p-3 mb-4 bg-body rounded mt-4 fs-5" v-if="nowanswers">
+  当前评论:
+  <p class="fs-6 text-end">当前共有{{`${nowanswers.length}`}}条评论</p>
+</div>
 <div class="shadow-sm p-3 mb-4 bg-body rounded mt-4 fs-5" v-if="!nowanswers[0]">
   <div class="card text-center">
   <div class="card-header" >
