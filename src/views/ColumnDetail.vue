@@ -14,6 +14,14 @@
     </div>
   </div>
 </div>
+<div class="card mb-5 bg-info">
+  <div class="card-body " v-if="list.length > 0">
+    当前话题下共有{{list.length}}篇文章
+  </div>
+  <div class="card-body" v-else>
+    当当前话题下暂无文章
+  </div>
+</div>
 <post-list :list="list"></post-list>
 </template>
 

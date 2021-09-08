@@ -5,7 +5,7 @@
   >
   <div class="card-body">
     <h5 class="card-title fs-3">{{questionData.title}}</h5>
-    <p class="card-text ">  {{questionData.description}}</p>
+    <div class="card-text " v-html="questionData.description">  </div>
 
     <div class="card-text mt-3 ">
       <span class="card-text fs-5">作者: </span>

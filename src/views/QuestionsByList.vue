@@ -27,18 +27,22 @@
     </li>
   </ul>
 </nav>
+<add-button @click="toPost" v-if="loginState"/>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted, ref, reactive } from 'vue'
+import { defineComponent, computed, onMounted, ref } from 'vue'
 import CardList from '../components/CardList.vue'
+import AddButton from '../components/AddButton.vue'
 import { useStore } from 'vuex'
 import { GlobalDataProps } from '../store'
 import axios from 'axios'
+import router from '@/router'
 
 export default defineComponent({
   components: {
-    CardList
+    CardList,
+    AddButton
   },
   setup () {
     const resdatalength = ref(0)
@@ -46,6 +50,7 @@ export default defineComponent({
     const searchval = ref('')
     const store = useStore<GlobalDataProps>()
     const queslist = computed(() => store.state.questions)
+    const loginState = ref(localStorage.getItem('isLogin') === 'true')
     console.log(queslist.value, 'q')
     onMounted(() => {
       store.dispatch('fetchQuestions')
@@ -61,13 +66,18 @@ export default defineComponent({
     const toSearch = () => {
       store.dispatch('fetchQuestionsByQ', searchval.value)
     }
+    const toPost = () => {
+      router.push('/createpage')
+    }
     return {
       queslist,
       changepage,
       page,
       searchval,
       toSearch,
-      resdatalength
+      resdatalength,
+      toPost,
+      loginState
     }
   }
 })

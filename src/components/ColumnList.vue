@@ -5,7 +5,7 @@
         <img :src="column.avatar_url" :alt="column.title" class="card-img-top imgsize my-3">
         <div class="card-body text-center">
           <h5 class="card-title">{{column.name}}</h5>
-          <p class="card-text text-left">{{column.introduction || ''}}</p>
+          <!-- <p class="card-text text-left">{{column.introduction || ''}}</p> -->
           <router-link :to="`/column/${column._id}`" class="btn btn-primary">进入专栏</router-link>
         </div>
       </div>
