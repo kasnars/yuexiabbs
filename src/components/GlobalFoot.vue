@@ -8,6 +8,9 @@
           <li class="list-inline-item" @click="toGitee">更多</li>
         </div>
       </small>
+      <small>
+        <div>当前版本：{{version}}</div>
+      </small>
     </footer>
 </template>
 
@@ -29,11 +32,13 @@ export default defineComponent({
     const toCallMe = () => {
       createMessage('邮箱：kasnars@163.com', 'success', 5000)
     }
+    const version = '1.0.0'
     return {
       toHome,
       toAbout,
       toGitee,
-      toCallMe
+      toCallMe,
+      version
     }
   }
 })

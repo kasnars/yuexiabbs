@@ -74,6 +74,30 @@
     <div class="btn btn-primary float-end" @click.prevent="changeCommentShow">取消编辑</div>
   </template>
 </comment>
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item" :class="{'disabled': nowAnswersPage === 1,'dont': nowAnswersPage == 1}">
+      <a class="page-link" href="#" aria-label="Previous" @click="changePage(-1)">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#" v-if="nowAnswersPage !== 1"
+      @click="toPage(nowAnswersPage-1)"
+    >{{nowAnswersPage-1}}</a></li>
+    <li class="page-item"><a class="page-link" href="#">{{nowAnswersPage}}</a></li>
+    <li class="page-item" ><a class="page-link" href="#"
+    @click="toPage(nowAnswersPage+1)"
+    v-if="nowanswers.length === 10"
+    >{{nowAnswersPage+1}}</a></li>
+    <li class="page-item" :class="{'disabled': nowanswers.length !== 10, 'dont': nowanswers.length !== 10}"
+    >
+      <a class="page-link" href="#" aria-label="Next" @click="changePage(1)">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    <span class="page-item page-link ">您正在浏览第{{nowAnswersPage}}页</span>
+  </ul>
+</nav>
 </template>
 
 <script lang="ts">
@@ -114,6 +138,8 @@ export default defineComponent({
       updateTime: '',
       answerId: ''
     })
+    // eslint-disable-next-line prefer-const
+    const nowAnswersPage = ref(1)
     axios.get(`/questions/${nowId}`).then(res => {
       const { title, description, image, questioner, updatedAt } = res.data
       questionData.title = title
@@ -126,7 +152,7 @@ export default defineComponent({
       queserId.value = questioner._id
     })
     onMounted(() => {
-      store.dispatch('getNowAnswers', nowId)
+      store.dispatch('getNowAnswers', [nowId, nowAnswersPage.value])
     })
     const nowanswers = computed(() => store.state.nowanswers)
     const deleteQuestion = () => {
@@ -166,6 +192,16 @@ export default defineComponent({
         router.push('/login')
       })
     }
+    const changePage = (page:number) => {
+      nowAnswersPage.value += page
+      store.dispatch('getNowAnswers', [nowId, nowAnswersPage.value])
+      console.log(nowAnswersPage.value, 'changePage')
+    }
+    const toPage = (page: number) => {
+      nowAnswersPage.value = page
+      store.dispatch('getNowAnswers', [nowId, nowAnswersPage.value])
+      console.log(nowAnswersPage.value, 'changePage')
+    }
     return {
       nowId,
       questionData,
@@ -182,7 +218,10 @@ export default defineComponent({
       isLogin,
       toReEdit,
       queserId,
-      toUserIndex
+      toUserIndex,
+      nowAnswersPage,
+      changePage,
+      toPage
     }
   }
 })
@@ -216,5 +255,8 @@ export default defineComponent({
 }
 .textcenter {
   line-height: 50px;
+}
+.dont {
+  cursor:not-allowed;
 }
 </style>

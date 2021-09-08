@@ -4,7 +4,8 @@
     <!-- <img src="https://img0.baidu.com/it/u=605166524,1097055388&fm=26&fmt=auto&gp=0.jpg"
     class="img-fluid w-100 p-3" alt="..."> -->
       <div class="card" v-else>
-        <img src="https://img1.baidu.com/it/u=2716035155,4250794299&fm=11&fmt=auto&gp=0.jpg" alt=""
+        <img src="https://i.niupic.com/images/2021/09/08/9uGY.jpg
+" alt=""
         class="imageSize"
         >
         <div class="card-body">

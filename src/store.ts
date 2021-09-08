@@ -197,9 +197,10 @@ const store = createStore<GlobalDataProps>({
         return dispatch('fetchUser')
       })
     },
-    getNowAnswers ({ commit }, nowquesId) {
-      axios.get(`/questions/${nowquesId}/answers`).then(res => {
+    getNowAnswers ({ commit }, [nowquesId, page]) {
+      axios.get(`/questions/${nowquesId}/answers?page=${page}`).then(res => {
         commit('getNowAnswers', res.data)
+        console.log(res, 'res')
       })
     }
   },
