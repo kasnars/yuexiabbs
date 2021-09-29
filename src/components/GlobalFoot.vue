@@ -8,8 +8,11 @@
           <li class="list-inline-item" @click="toGitee">更多</li>
         </div>
       </small>
-      <small>
+      <small :style="{margin:'10px'}">
         <div>当前版本：{{version}}</div>
+        <span>
+          备案号：鄂ICP备2021014329号
+        </span>
       </small>
     </footer>
 </template>
