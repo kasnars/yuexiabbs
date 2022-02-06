@@ -11,7 +11,7 @@
       <small :style="{margin:'10px'}">
         <div>当前版本：{{version}}</div>
         <span>
-          备案号：鄂ICP备2021014329号
+          <a href="https://beian.miit.gov.cn/">备案号：鄂ICP备2021014329号</a>
         </span>
       </small>
     </footer>
@@ -35,7 +35,7 @@ export default defineComponent({
     const toCallMe = () => {
       createMessage('邮箱：kasnars@163.com', 'success', 5000)
     }
-    const version = '1.0.0'
+    const version = '1.0.1'
     return {
       toHome,
       toAbout,
